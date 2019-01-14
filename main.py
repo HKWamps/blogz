@@ -40,9 +40,8 @@ def index():
 
     
     blogs = Blog.query.all()
-    #completed_tasks = Task.query.filter_by(completed=True).all()
     return render_template('blog.html',title="Blogs", 
-        blogs=blogs) #, completed_tasks=completed_tasks)
+        blogs=blogs) 
 
 
 @app.route('/newpost', methods=['POST', 'GET'])
@@ -73,11 +72,24 @@ def add_blog():
         db.session.add(new_blog)
         db.session.commit()
 
-    blogs = Blog.query.all()
+        blog_id = new_blog.id
+        blogs = Blog.query.filter_by(id=blog_id).all()
+        return render_template('blog1.html',title="Blogs", blogs=blogs)
+
+        #blogs = Blog.query.all()
+        #return render_template('blog.html',title="Blogs", blogs=blogs)    
+    
+    
+    #if request.args !="":
+    #    blog_id = request.args.get('id')
+        # return Movie.query.filter_by(watched=False).all()
+    #    blogs = Blog.query.filter_by(id=blog_id).all()
+    #    return render_template('blog.html',title="Blogs", blogs=blogs)       
+    
     #completed_tasks = Task.query.filter_by(completed=True).all()
-    return render_template('blog.html',title="Blogs", 
-        blogs=blogs) #, completed_tasks=completed_tasks)
-    #return redirect('/')
+    #blogs = Blog.query.all()
+    #return render_template('blog.html',title="Blogs", blogs=blogs) #, completed_tasks=completed_tasks)
+    return render_template('newpost.html') #, error1=rtn_error1, error2=rtn_error2)
 
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
@@ -88,7 +100,16 @@ def blog():
     #db.session.add(task)
     #db.session.commit()
 
-    return redirect('/')
+    if request.args !="":
+        blog_id = request.args.get('id')
+        # return Movie.query.filter_by(watched=False).all()
+        blogs = Blog.query.filter_by(id=blog_id).all()
+        return render_template('blog1.html',title="Blogs", blogs=blogs)   
+
+    blogs = Blog.query.all()
+    return render_template('blog.html',title="Blogs", 
+        blogs=blogs) 
+
 
 @app.route('/delete-task', methods=['POST'])
 def delete_task():
