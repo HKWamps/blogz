@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Signup Page</h2>
+
+
+<form action="/signup" method="post">
+    <label>
+    <table>
+        <tr><td style="width:30px"></td><th span colspan="2" style="width:auto;background-color:gold">Enter Your Information</th><tr></tr>
+        {%for EachField in input_fields%}
+        
+        <tr>
+            <td > </td>
+            <td style="width:200px">{{EachField[0]}}</td>
+            <td style="width:auto"><input type={{EachField[2]}} name={{EachField[1]}} value={{input_values[loop.index0]}} ></td> 
+            <td style="width:auto; color:red">{{error_list[loop.index0]}}</td>
+        </tr>
+    
+        {%endfor%}
+                       
+    </table>
+    </label>
+    <br>
+    <input type="submit" value="Validate" />
+</form>
+
+{% if error %}
+<p class='error'>{{ error }}</p>
+{% endif %}
+{% endblock %}

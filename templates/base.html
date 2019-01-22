@@ -1,14 +1,41 @@
 <!doctype html>
+<style type="text/css">
+    td {display: inline-block;}    
+    td.spaced {margin-left: 30px;}
+</style>
 <html>
     <head>
         <title>{{title}}</title>
+
         <nav>
-            <a href="{{ url_for('index') }}">Main Blog Page</a> &nbsp;&nbsp; 
-            <a href="{{ url_for('add_blog') }}">Add a Blog Entry</a>
+            <table cols=7 style='border:thin solid blue' width=100%>
+            
+                <tr>
+
+                <td class="spaced"><a href="{{ url_for('index') }}">home</a></td>
+                <td class="spaced"><a href="{{ url_for('blog') }} ">all posts</a></td>
+                <td class="spaced"><a href="{{ url_for('add_blog') }}">new post</a></td>
+                <td class="spaced"></td>
+                <td class="spaced"></td>
+                <td class="spaced"><a href="{{ url_for('login') }}">login</a></td>
+                <td class="spaced"><a href="{{ url_for('logout') }}">logout</a></td>
+                
+            </tr>
+            </table>
         </nav>
+
     </head>
 <body>
-
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes >
+            {% for message in messages %}
+                <li style="color:red;">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
     {% block content %}
     {% endblock %}
 
